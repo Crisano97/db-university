@@ -16,7 +16,7 @@
 
     SELECT `date_of_birth`
     FROM `students`
-    WHERE YEAR(`date_of_birth`) < 1992; 
+    WHERE TIMESTAMPDIFF(YEAR,`date_of_birth`,'1992/12/31');
 
 4. Selezionare tutti i corsi del primo semestre del primo anno di un qualsiasi corso di
 laurea (286)
@@ -54,8 +54,30 @@ laurea (286)
 
 1. Contare quanti iscritti ci sono stati ogni anno
 
+    SELECT COUNT(`id`), `enrolment_date` 
+    FROM `students` 
+    GROUP BY `enrolment_date`; 
+
 2. Contare gli insegnanti che hanno l'ufficio nello stesso edificio
+
+    SELECT COUNT(`id`), `office_address` 
+    FROM `teachers` 
+    GROUP BY `office_address`;
 
 3. Calcolare la media dei voti di ogni appello d'esame
 
+    SELECT AVG(`vote`), `exam_id` 
+    FROM `exam_student` 
+    GROUP BY `exam_id`;
+
 4. Contare quanti corsi di laurea ci sono per ogni dipartimento
+
+    (Questo mostra solo il numero di corsi per ogni dipartimento, es. 10 | 1)
+    SELECT COUNT(`id`), `department_id` 
+    FROM `degrees` 
+    GROUP BY `department_id`; 
+
+    (Questo mostra per ogni riga il nome del corso di laurea e il dipartimento a cui appartiene)
+    SELECT `name`, COUNT(`id`), `department_id` 
+    FROM `degrees` 
+    GROUP BY `name`, `department_id`; 
